@@ -27,6 +27,77 @@ namespace modul3_1302200010
             return hasil;
         }
     }
+    enum State { Berdiri, Jongkok, Tengkurap, Terbang, Keluar };
+    class PosisiKarakterGame
+    {
+        public static void posisiKarakterGame()
+        {
+            State state = State.Berdiri;
+            string[] screenName = { "Berdiri", "Jongkok", "Tengkurap", "Terbang", "Keluar" };
+            while (state != State.Keluar)
+            {
+                Console.WriteLine(screenName[(int)state]);
+                Console.Write("Enter Command : ");
+                ConsoleKeyInfo command = Console.ReadKey();
+                if(command.Key == ConsoleKey.S)
+                {
+                    Console.WriteLine("\ntombol arah bawah ditekan\n");
+                }
+                if (command.Key == ConsoleKey.W)
+                {
+                    Console.WriteLine("\ntombol arah atas ditekan\n");
+                }
+                switch (state)
+                {
+                    case State.Berdiri:
+                        if (command.Key == ConsoleKey.W)
+                            state = State.Terbang;
+                        else if (command.Key == ConsoleKey.S)
+                            state = State.Jongkok;
+                        //else if (command == "Keluar")
+                        //    state = State.Keluar;
+                        else
+                            state = State.Berdiri;
+                        break;
+                    case State.Tengkurap:
+                        if (command.Key == ConsoleKey.W)
+                            state = State.Jongkok;
+                        //else if (command == "Keluar")
+                        //    state = State.Keluar;
+                        else
+                            state = State.Tengkurap;
+                        break;
+                    case State.Jongkok:
+                        if (command.Key == ConsoleKey.W)
+                            state = State.Berdiri;
+                        else if (command.Key == ConsoleKey.S)
+                            state = State.Tengkurap;
+                        //else if (command == "Keluar")
+                        //    state = State.Keluar;
+                        else
+                            state = State.Jongkok;
+                        break;
+                    case State.Terbang:
+                        if (command.Key == ConsoleKey.S)
+                            state = State.Berdiri;
+                        else if (command.Key == ConsoleKey.X)
+                        {
+                            Console.WriteLine("\n");
+                            state = State.Jongkok;
+                        }
+                        //else if (command == "Keluar")
+                        //    state = State.Keluar;
+                        else
+                            state = State.Terbang;
+                        break;
+                    //case State.Keluar:
+                    //    break;
+                }
+            }
+            Console.WriteLine("Anda Keluar");
+        }
+
+    }
     class Program
     {
         static void Main(string[] args)
@@ -36,7 +107,8 @@ namespace modul3_1302200010
             Console.Write("Kode Pos             : ");
             Console.WriteLine(KodeBuah.GetKodeBuah(buah));
 
-
+            Console.WriteLine();
+            PosisiKarakterGame.posisiKarakterGame();
             Console.ReadKey();
         }
     }
